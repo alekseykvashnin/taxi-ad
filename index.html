@@ -4,9 +4,37 @@
   <meta charset="UTF-8" />
   <title>Реклама такси</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #222; color: white; text-align: center; margin: 0; padding: 0;}
-    #text { font-size: 2.5em; margin: 20px; }
-    #image { max-width: 90vw; max-height: 60vh; border-radius: 10px; box-shadow: 0 0 20px white; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #222;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #text {
+      font-size: 2.5em;
+      margin: 20px;
+    }
+    #image {
+      max-width: 90vw;
+      max-height: 60vh;
+      border-radius: 10px;
+      box-shadow: 0 0 20px white;
+      transition: all 0.3s ease-in-out;
+    }
+    .full-screen-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw !important;
+      height: 100vh !important;
+      object-fit: cover;
+      border-radius: 0;
+      box-shadow: none;
+    }
   </style>
 </head>
 <body>
@@ -18,7 +46,7 @@
       { text: "Понравилось авто! Сохрани номер 063 102 77 21", img: "images/niro_taxi_qr.png" },
       { text: " ", img: "images/adv.png" },
       { text: "Аренда авто с водителем почасово. На свадьбу, фотосессию, деловую встречу — KIA Niro ждёт! 063 102 77 21", img: "images/niro_arenda_qr.png" },
-      { text: "В этом авто есть WiFi. Чтобы подключиться сканируй QR код. Чтобы подключиться сканируй QR код", img: "images/WiFi.PNG" },
+      { text: "В этом авто есть WiFi. Чтобы подключиться сканируй QR код", img: "images/WiFi.PNG" },
       { text: "Установка солнечных панелей, монтаж настройка под ключ, сборка аккумуляторных систем питания квартир/офисов/магазинов и т.п. 097 859 41 41", img: "images/zelen.PNG" },
       { text: "Ремонт компьютеров, принтеров, ксероксов, заправка картриджей. Настройка локальных сетей", img: "images/remont.PNG" },
       { text: "Умный дом. Автоматическое управление отоплением, освещением, охраной, уборкой", img: "images/smart_home.PNG" }
@@ -28,8 +56,23 @@
 
     function showSlide(i) {
       currentIndex = i % slides.length;
-      document.getElementById('text').textContent = slides[currentIndex].text;
-      document.getElementById('image').src = slides[currentIndex].img;
+      const slide = slides[currentIndex];
+      const textEl = document.getElementById('text');
+      const imgEl = document.getElementById('image');
+
+      // Убираем все спец. классы
+      imgEl.classList.remove('full-screen-image');
+
+      // Если слайд без текста или это конкретное изображение
+      if (!slide.text.trim() || slide.img.includes("adv.png")) {
+        textEl.style.display = 'none';
+        imgEl.classList.add('full-screen-image');
+      } else {
+        textEl.style.display = 'block';
+        textEl.textContent = slide.text;
+      }
+
+      imgEl.src = slide.img;
     }
 
     function startSlideshow() {
