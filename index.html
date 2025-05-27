@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Реклама такси</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #222; color: white; text-align: center; margin: 0; padding: 0;}
+    #text { font-size: 2.5em; margin: 20px; }
+    #image { max-width: 90vw; max-height: 60vh; border-radius: 10px; box-shadow: 0 0 20px white; }
+  </style>
+</head>
+<body>
+  <div id="text">Загрузка рекламы...</div>
+  <img id="image" src="" alt="Реклама" />
+
+  <script>
+    const slides = [
+      { text: "Понравилось авто! Сохрани контакт. 063 102 77 21", img: "images/ad1.jpg" },
+      // Добавляй сюда новые объекты с текстом и картинками
+    ];
+
+    let currentIndex = 0;
+
+    function showSlide(i) {
+      currentIndex = i % slides.length;
+      document.getElementById('text').textContent = slides[currentIndex].text;
+      document.getElementById('image').src = slides[currentIndex].img;
+    }
+
+    function startSlideshow() {
+      showSlide(0);
+      setInterval(() => {
+        currentIndex++;
+        showSlide(currentIndex);
+      }, 15000);
+    }
+
+    startSlideshow();
+  </script>
+</body>
+</html>
